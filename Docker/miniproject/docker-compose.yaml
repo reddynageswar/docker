@@ -1,0 +1,53 @@
+version: "3.8"
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"  # Expose frontend on host
+    depends_on:
+      - backend
+    networks:
+      - app_network
+    volumes:
+      - frontend_data:/usr/share/nginx/html  # Persist frontend files
+    restart: always
+
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"  # API exposed only to frontend
+    depends_on:
+      - db
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_USER=root
+      - DATABASE_PASSWORD=rootpassword
+      - DATABASE_NAME=mydb
+    networks:
+      - app_network
+    volumes:
+      - backend_logs:/app/logs  # Store logs persistently
+    restart: always
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_DATABASE=mydb
+    ports:
+      - "3306:3306"  # Expose MySQL only to internal services
+    volumes:
+      - db_data:/var/lib/mysql  # Persist database
+    networks:
+      - app_network
+
+volumes:
+  frontend_data:
+  backend_logs:
+  db_data:
+
+networks:
+  app_network:
+    driver: bridge  # Isolated private network
