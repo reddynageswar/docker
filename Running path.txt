@@ -1,0 +1,163 @@
+Rename-Item -Path "dockerfile.txt" -NewName "Dockerfile"
+
+
+
+Working on docker images
+===============================
+1 To pull a docker image
+  docker pull image_name
+
+2 To search for a docker images
+  docker search image_name
+
+3 To upload an image into docker hub
+  docker push image_name
+
+4 To see the list of images that are downloaded
+  docker images
+  or
+  docker image ls
+
+5 To get detailed info about a docker image
+  docker image inspect image_name/image_id
+
+6 To delete a docker image that is not linked to any container
+  docker rmi image_name/image_id
+
+7 To delete a image that is linked to a container
+  docker rmi -f image_name/image_id
+
+8 To save the docker image as a tar file
+  docker save image_name
+
+9 To untar this tar file and get  image
+  docker load tarfile_name
+
+10 To delete all image
+   docker system prune -af
+
+
+===================================================================
+11 To create a docker image from a dockerfile
+   docker build -t image_name .
+
+12 To create an image from a customised container
+   docker commit container_id/container_name image_name
+
+Working on docker containers
+==================================
+13 To see the list of running containers
+   docker container ls
+
+14 To see the list of all containers (running and stopped)
+   docker ps -a
+
+15 To start a container
+   docker start container_id/container_name
+
+16 To stop a container
+   docker stop container_id/container_name
+
+17 To restart a container
+   docker restart container_id/container_name
+   To restart after 10 seconds
+   docker restart -t 10 container_id/container_name
+
+18 To delete a stopped container
+   docker rm container_id/container_name
+
+19 To delete a running container
+   docker rm -f container_id/container_name
+
+20 To stop all running container
+   docker stop $(docker ps -aq)
+
+21 To delete all stopped containers
+   docker rm $(docker ps -aq)
+21 To delete all stopped containers
+   docker rm $(docker ps -aq)
+
+22 To delete all running and stopped containers
+   docker rm -f $(docker ps -aq)
+
+23 To get detailed info about a container
+   docker inspect container_id/container_name
+
+24 To see the logs genearated by a container
+   docker logs container_id/container_name
+
+25 To create a docker container
+   docker run image_name/image_id
+   run command options
+   ---------------------
+   --name:  USed to give a name to the container
+   --restart: Used to keep the container in runnign condition
+   -d: Used to run the container in detached mode in background
+   -it: Used to open interactive terminal in the container
+   -e: Used to pass environment varibales to the container
+   -v : Used to attach an external device or folder as a volume
+   --volumes-from: Used to share volume between multiple containers
+   -p : Used for port mapping.It will link the container port with
+        host port.Eg: -p 8080:80 Here 8080 is host port(external port)
+        and 80 is container port(internal port)
+   -P: Used for automatic port mapping where the container port is
+       mapped with some host port that is greate than 30000
+   --link : Used to create a link between multiple containers to create a
+            microservices architecture.
+   --network: Used to start a container on a specific network
+   -rm : Used to delete a container on exit
+   -m: Used to specify the upper limit on the amount of memeory that 
+       a container can use
+   -c: Used to specify the upper limit on the amout of cpu a container can use
+   -ip: Used to asssign an ip to the container
+
+26 To see the ports used by a container
+   docker port container_id/container_name
+
+27 To run any process in a container from outside the container
+   docker exec -it container_id/container_name process_name
+   Eg: To run the bash process in a container
+   docker exec -it container_id/container_name bash
+
+28 To come out of a container without exit
+   ctrl+p,ctrl+q
+
+29  To go back into a container from where the interactive terminal is running
+    docker attach container_id/container_name
+
+30  To see the processes runnign in a container
+    docker container container_id/container_name top
+
+Working on docker networks
+===============================
+31 To see the list of docker networks
+   docker network ls
+
+32 To create a docker network
+   docker network create --driver network_type network_name
+
+33 To get detailed info about a network
+   docker network insepct network_name/network_id
+
+34 To delete a docker network
+   docker network rm network_name/network_id
+
+35 To connect a running container to a network
+   docker netowork connect network_name/network_id container_name/container_id
+
+36 To disconnect a running container to a network
+   docker netowork disconnect network_name/network_id container_name/container_id
+
+Working on docker volumes
+============================
+37 To see the list of docker  volumes
+   docker volume ls
+
+38 To create a docker volume
+   docker volume create volume_name
+
+39 To get detailed info about a volume
+   docker volume inspect volume_name/volume_id
+
+40 To delete a volume
+   docker volume rm volume_name/volume_id
