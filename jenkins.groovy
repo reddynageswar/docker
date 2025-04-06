@@ -12,6 +12,8 @@ pipeline {
         stage('Build') {
             steps {
                 echo "🔧 Running build steps..."
+                sh "cd  /Docker/miniproject"
+                sh "docker-compose up"
                 sh 'echo "Build successful!"'
             }
         }
