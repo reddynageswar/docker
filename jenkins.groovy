@@ -12,7 +12,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo "🔧 Running build steps..."
-                sh "cd  /var/lib/jenkins/workspace/new-jenkins/Docker/miniproject"
+                sh "cd /var/lib/jenkins/workspace/new-jenkins/Docker/miniproject"
                 sh "docker-compose up"
                 sh 'echo "Build successful!"'
             }
