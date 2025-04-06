@@ -13,7 +13,7 @@ pipeline {
             steps {
                 echo "🔧 Running build steps..."
                 sh "cd /var/lib/jenkins/workspace/new-jenkins/Docker/miniproject"
-                sh "docker-compose up"
+                sh "docker-compose -f docker-compose.yaml up"
                 sh 'echo "Build successful!"'
             }
         }
