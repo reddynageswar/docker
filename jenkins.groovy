@@ -34,6 +34,33 @@ pipeline {
                 sh 'echo "Deployed successfully!"'
             }
         }
+        stage('Check Application Availability') {
+    steps {
+        script {
+            def publicIp = '3.86.2.216'  // Replace with actual IP or inject as env var
+
+            def ports = [3000, 5000]
+
+            ports.each { port ->
+                def url = "http://${publicIp}:${port}"
+
+                echo "Checking availability for ${url}..."
+
+                def response = sh(
+                    script: "curl -s -o /dev/null -w \"%{http_code}\" ${url}",
+                    returnStdout: true
+                ).trim()
+
+                if (response == '200') {
+                    echo "✅ Application on port ${port} is UP."
+                } else {
+                    error("❌ Application on port ${port} is NOT reachable. Status: ${response}")
+                }
+            }
+        }
+    }
+}
+
     }
 
     post {
