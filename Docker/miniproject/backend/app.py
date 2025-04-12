@@ -16,14 +16,32 @@ db_config = {
 def home():
     return jsonify({"message": "Hello from Flask Backend!"})
 
-@app.route("/data")
-def get_data():
+# @app.route("/data")
+# def get_data():
+#     try:
+#         connection = mysql.connector.connect(**db_config)
+#         cursor = connection.cursor()
+#         cursor.execute("SELECT DATABASE();")
+#         result = cursor.fetchone()
+#         return jsonify({"database": result[0]})
+#     except Exception as e:
+#         return jsonify({"error": str(e)})
+#     finally:
+#         if connection.is_connected():
+#             cursor.close()
+#             connection.close()
+
+@app.route("/user/<int:user_id>")
+def get_user_data(user_id):
     try:
         connection = mysql.connector.connect(**db_config)
-        cursor = connection.cursor()
-        cursor.execute("SELECT DATABASE();")
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
         result = cursor.fetchone()
-        return jsonify({"database": result[0]})
+        if result:
+            return jsonify(result)
+        else:
+            return jsonify({"message": "User not found"}), 404
     except Exception as e:
         return jsonify({"error": str(e)})
     finally:
