@@ -14,7 +14,7 @@ pipeline {
                 echo "🔧 Running build steps..."
                 sh """
                   cd /var/lib/jenkins/workspace/Jenkins_docker_project/Docker/miniproject
-                  docker-compose -f docker-compose build
+                  docker-compose -f docker-compose.yaml build
                   docker-compose -f docker-compose.yaml up -d
                  """
                 sh 'echo "Build successful!"'
